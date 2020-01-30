@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Friends of the Circuit</title>
+    <meta name="description" content="">
+    <meta name="author" content="Terrence Porretto">
+    <link rel="canonical" href="https://fotc.app/">
+  </head>
+<body>
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+
+          <a id="navbar-brand" class="navbar-brand" title="Edit Your Profile" href="#manage-profile-row">
+            <i class="fas fa-user-circle fa-3x"></i>
+          </a>
+          <a href="#" class="brand-tag">
+            <div title="Friends of the Circuit" class="brand-tag-text"> FOTC </div>
+          </a>
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse justify-content-end" id="navbarMain">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#add-listing-row">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#add-listing-row">Link</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#add-listing-row">Link</a>
+              </li>
+            </ul>
+          </div>
+
+    </div>
+  </nav>
+
+<main role="main" class="container">
+<div class="row">
+  <div class="col">
+    <div class="jumbotron">
+
+      <div class="row">
+        <div class="col">
+          <h2 class="display-4">Search Address</h2>
+        </div>
+        <div class="col mt-3">
+          <form id="searchAddress" name="searchAddress" class="form-inline">
+                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="409 Blackwell St, Durham, NC 27701" id="address" name="address" size="40">
+                <button id="submitSearchAddress" type="submit" class="btn btn-primary mb-2">Search</button>
+          </form>
+        </div>
+      </div>
+      
+      <hr class="my-4">
+        <div id="map">map here...</div>
+      <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+  <section id="user-listings">
+    <div class="row">
+      <div class="col">
+        <h2 class="page-header" id="buttons">Your Listings</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col user-list">
+            <ul id="circuitList" class="list-group">
+            </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="add-listing-row">
+    <div class="row">
+      <div class="col">
+        <h2 class="page-header" id="buttons">Get On The Circuit</h2>
+        <form id="saveListing" name="saveListing">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control form-control-lg" id="title" name="title" placeholder="Something Fun">
+          </div>
+          <div class="form-group">
+            <label for="category">category</label>
+            <select class="form-control" id="category" name="category">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+              <option>4</option>
+              <option>5</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" name="datetimepicker1" />
+                <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                </div>
+            </div>
+          </div>
+          <input type="hidden" id="uidProfile" name="uidProfile" value="" />
+          <button type="submit" name="save" id="save" class="btn btn-success btn-primary">Save</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="manage-profile-row">
+    <div class="row">
+      <div class="col-8">
+        <h2 class="page-header" id="buttons">Add To Profile</h2>
+          <form id="updateUserInfo" name="updateUserInfo">
+            <div class="form-group">
+              <label for="userName">Name</label>
+              <input type="text" class="form-control" id="userName" name="userName" aria-describedby="userHelp">
+              <small id="userHelp" class="form-text text-muted">Your FLASHY user name</small>
+            </div>
+            <div class="form-group">
+              <label for="userPhone">Mobile</label>
+              <input type="text" class="form-control" id="userPhone" name="userPhone" aria-describedby="phoneHelp">
+              <small id="phoneHelp" class="form-text text-muted">000-000-0000 like this</small>
+            </div>
+            <div class="form-group">
+              <label for="userEmail">Email address</label>
+              <input type="email" class="form-control" id="userEmail" name="userEmail" aria-describedby="emailHelp">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="userImg">Change Image</label>
+              <!-- <input type="file" class="form-control-file" id="userImg" name="userImg"> -->
+              <input type="text" class="form-control" id="userImg" name="userImg">
+            </div>
+
+            <div class="form-group">
+              <h2>Your Interests</h2>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input your-interests" type="checkbox" value="Photography">
+                <label class="form-check-label" for="interest-1">Photography</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input your-interests" type="checkbox" value="Exercise">
+                <label class="form-check-label" for="interest-2">Exercise</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input your-interests" type="checkbox" value="Travel">
+                <label class="form-check-label" for="interest-3">Travel</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input your-interests" type="checkbox" value="Sports">
+                <label class="form-check-label" for="interest-4">Sports</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input your-interests" type="checkbox" value="Music">
+                <label class="form-check-label" for="interest-5">Music</label>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="col">
+                <div class="form-group">
+                  <label for="userLocation">Location</label>
+                  <input type="text" class="form-control" id="userLocation" name="userLocation">
+                </div>
+              </div>
+              <div class="col mt-auto">
+                <div class="form-group">
+                  <a href="#" id="geoButton" name="geoButton" class="btn btn-primary" type="button">Locate Me</a>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="uid" name="uid" value="" />
+            <button class="btn btn-primary" type="submit">Submit Profile Changes</button>
+          </form>
+      </div>
+      <div class="col">
+        <div class="card">
+          <img src="..." id="user-photo" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title"><div id="user-welcome"></div></h5>
+            <p class="card-text">
+              <div id="user-email"></div>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+<nav class="navbar justify-content-center fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+  <ul class="nav justify-content-center" id="user-actions">
+    <li class="nav-item mx-4">
+      <a href="#add-listing-row" title="Add New Listing On The Circuit" id="addListing" class="nav-link"><i class="fas fa-2x fa-plus"></i></a>
+    </li>
+    <li class="nav-item mx-4">
+      <a href="#user-listings" title="Manage Your Listings" id="manageListing" class="nav-link"><i class="fas fa-2x fa-tasks"></i></a>
+    </li>
+    <li class="nav-item mx-4" id="signInNavItem" style="display:none;">
+      <a href="#" title="Sign In" id="signInButton" class="nav-link"><i class="fab fa-2x fa-google"></i></a>
+    </li>
+    <li class="nav-item mx-4" id="signOutNavItem" style="display:none;">
+      <a href="#" title="Sign Out" id="signOutButton" class="nav-link"><i class="fas fa-2x fa-sign-out-alt"></i></a>
+    </li>
+  </ul>
+</nav>
+<script type="text/javascript" src="main.js"></script></body>
+</html>

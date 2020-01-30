@@ -1,0 +1,74 @@
+// Your variable overrides can go here, e.g. $h1-font-size: 3rem;
+@import "~bootswatch/dist/minty/variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~bootswatch/dist/minty/bootswatch";
+
+$fa-font-path : "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/brands";
+
+@import "~tempusdominus-bootstrap-4/src/sass/tempusdominus-bootstrap-4-build";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body { padding-top: 5%; }
+
+section {
+  margin: 200px auto;
+  padding-top: 120px;
+}
+
+#navbarMain {
+  margin-left: 20px;
+}
+
+#navbar-brand img {
+  width: 56px;
+}
+
+.navbar .brand-tag-text {
+  color: #ffffff;
+  font-size: 1.85rem;
+  font-weight: 400;
+}
+
+.navbar .brand-tag {
+  margin-right: 20px;
+}
+
+.navbar .brand-tag:hover {
+  text-decoration: none;
+}
+
+#user-actions a {
+  color: #ffffff;
+}
+
+#user-actions a:hover, .brand-tag-text:hover {
+  // color: #55b298;
+  color: #ffffff99;
+}
+
+.jumbotron {
+  padding-top: 2em;
+}
+
+#map {
+  height: 420px;
+  width: 99%;
+}
+
+@media
+  only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (   min--moz-device-pixel-ratio: 2),
+  only screen and (     -o-min-device-pixel-ratio: 2/1),
+  only screen and (        min-device-pixel-ratio: 2),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) { 
+    /*Your code for high res screens here */ 
+    body { padding-top: 25%; }
+}
