@@ -8,6 +8,8 @@ firebase-debug.log*
 
 # Firebase cache
 .firebase/
+# compiled files
+dist/
 
 # Firebase config
 
@@ -63,5 +65,3 @@ node_modules/
 
 # dotenv environment variables file
 .env
-
-dist/
