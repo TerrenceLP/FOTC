@@ -1,14 +1,14 @@
 /*jshint esversion: 6 */
-const Dotenv = require('dotenv-webpack');
 const path = require('path');
 const webpack = require("webpack");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+  mode: 'none',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    index: '',
     compress: true,
     hot: true,
     headers: {
@@ -16,6 +16,12 @@ module.exports = {
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
       "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
     }
+  },
+  entry: path.join(__dirname, 'src', 'index.js'),
+  output: {
+    filename: 'main.js',
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget : 'umd'
   },
   plugins: [
     new MiniCssExtractPlugin(),
@@ -26,18 +32,12 @@ module.exports = {
       moment: 'moment'
     }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      'template': 'src/index.html'
     }),
     new Dotenv()
   ],
-  entry: './src/index.js',
-  output: {
-    filename: 'main.js',
-    path: path.resolve(__dirname, 'dist')
-  },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(scss)$/,
         use: [{
           loader: 'style-loader', // inject CSS to page

@@ -1,0 +1,29 @@
+{
+  "projectid": {
+    "key": "fotc-8d770"
+  },
+  "authdomain": {
+    "key": "fotc-8d770.firebaseapp.com"
+  },
+  "appid": {
+    "key": "1:1001262891474:web:e911dd9ebdef622c5b480b"
+  },
+  "databaseurl": {
+    "key": "https://fotc-8d770.firebaseio.com"
+  },
+  "messagingsenderid": {
+    "key": "1001262891474"
+  },
+  "googlemapsapi": {
+    "key": "AIzaSyBRWWY_Z51eucvZNQ9Pu9vI2XnZAYJeE_k"
+  },
+  "storagebucket": {
+    "key": "fotc-8d770.appspot.com"
+  },
+  "measurementid": {
+    "key": "G-9HJGZER0ZT"
+  },
+  "api": {
+    "key": "AIzaSyD6erUXL8-949PK9-M8nhgJrKZJwMEwE1A"
+  }
+}
