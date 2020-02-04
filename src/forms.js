@@ -86,7 +86,7 @@ const addFakeUserInfo = () => {
     db.collection("users").add({
         created: Date.now(),
         email: faker.internet.email(),
-        image: faker.image.people(),
+        image: faker.internet.avatar(),
         interest: interest,
         location: new firebase.firestore.GeoPoint(+faker.address.latitude(),+faker.address.longitude()),
         name: faker.name.findName(),

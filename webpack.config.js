@@ -24,7 +24,9 @@ module.exports = {
     libraryTarget : 'umd'
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -32,30 +34,18 @@ module.exports = {
       moment: 'moment'
     }),
     new HtmlWebpackPlugin({
-      'template': 'src/index.html'
+      'template': path.join(__dirname, 'src', 'index.html')
     }),
     new Dotenv()
   ],
   module: {
     rules: [{
-        test: /\.(scss)$/,
-        use: [{
-          loader: 'style-loader', // inject CSS to page
-        }, {
-          loader: 'css-loader', // translates CSS into CommonJS modules
-        }, {
-          loader: 'postcss-loader', // Run post css actions
-          options: {
-            plugins: function () { // post css plugins, can be exported to postcss.config.js
-              return [
-                require('precss'),
-                require('autoprefixer')
-              ];
-            }
-          }
-        }, {
-          loader: 'sass-loader' // compiles Sass to CSS
-        }]
+      test: /\.scss$/,
+        use: [
+            { loader: MiniCssExtractPlugin.loader },
+            'css-loader',
+            'sass-loader'
+        ],
       },
       {
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,

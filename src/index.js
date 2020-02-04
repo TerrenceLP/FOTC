@@ -1,4 +1,3 @@
-/*jshint esversion: 6 */
 import $ from "jquery"
 window.jQuery = $
 window.$ = $
@@ -11,34 +10,81 @@ import './style.scss'
 import 'tempusdominus-bootstrap-4'
 
 import { Loader } from '@googlemaps/loader'
-import { firebase, googleSignIn, googleSignOut } from "./google"
+import { firebase, functions, googleSignIn, googleSignOut, startFunctionsRequest, startFunctionsCookieRequest, setLocation } from "./google"
 import { addListing, updateListing, addUserInfo, updateUserInfo} from "./forms"
 
 const loader = new Loader({
-  apiKey: process.env.googleKey, // dev server
+  apiKey: "AIzaSyBRWWY_Z51eucvZNQ9Pu9vI2XnZAYJeE_k", // Public Key Restricted 
   version: "weekly",
   libraries: ["places"]
 })
 
-// Geocode an address. Load Google Maps API
-loader.loadCallback(e => {
-  if (e) {
-    console.log(e)
-  } else {
-    let geocoder = new google.maps.Geocoder()
-    geocoder.geocode({
-      'address': '3412 Misty Lynn Ct Fuquay-Varina, NC 27526'
-    },
-    (results, status) => {
-      if (status == 'OK') {
-        let pos = results[0].geometry.location
-        let map = new google.maps.Map(document.getElementById("map"), {center: pos, zoom: 4})
-        showFOTC(map)
-      } else {
-        alert('Geocode was not successful for the following reason: ' + status);
-      }
-    })
-  }
+setLocation({text: 'holy moly roly'})
+.then((result) => {
+  console.log(result)
+  // Read result of the Cloud Function.
+  loader.loadCallback(e => {
+    if (e) {
+      console.log(e)
+    } else {
+      let geocoder = new google.maps.Geocoder()
+      geocoder.geocode({
+        'address': result.data.res[0].formatted_address
+      },
+      (results, status) => {
+        if (status == 'OK') {
+          let pos = results[0].geometry.location
+          let map = new google.maps.Map(document.getElementById("map"), {
+            center: pos, 
+            zoom: 8, 
+            styles: mapStyles
+          })
+          showFOTC(map)
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      })
+    }
+  })
+})
+
+document.getElementById("geoButton").addEventListener("click", (event) => {
+  event.preventDefault()
+  // Try HTML5 geolocation.
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition((position) => {
+      let pos = [position.coords.latitude,position.coords.longitude]
+      document.getElementById("userLocation").value = pos
+
+      let findMeSearch = new google.maps.Geocoder()
+        findMeSearch.geocode({
+          'location': {
+            lat: pos[0] , 
+            lng: pos[1]
+          } 
+        },(results, status) => {
+          if (status == 'OK') {
+            let pos = results[0].geometry.location
+            let map = new google.maps.Map(document.getElementById("map"), {center: pos, zoom: 12, styles: mapStyles})
+            let marker = new google.maps.Marker({
+              position: pos, 
+              map: map,
+              title: 'Hello World!',
+              animation: google.maps.Animation.DROP
+            })
+            let infowindow = new google.maps.InfoWindow({
+              content: 'content String'
+            })
+            marker.setMap(map)
+            marker.addListener('click', () => {
+              infowindow.open(map, marker)
+            })
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        })
+      })
+    }
 })
 
 const signInButton = document.getElementById('signInButton')
@@ -49,12 +95,16 @@ signOutButton.addEventListener('click', googleSignOut, false)
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
+
+    // startFunctionsRequest()
+    // startFunctionsCookieRequest()
     // User is signed in.
     const displayName = user.displayName
     const email = user.email
     const photoURL = user.photoURL
     const uid = user.uid
     const emailVerified = user.emailVerified
+    console.log(user.refreshToken)
 
     if(emailVerified === true){
     document.getElementById('user-welcome').innerHTML += '<i title="Double Verified User" class="fas fa-1x fa-check-double text-success"></i> '
@@ -90,8 +140,9 @@ const showFOTC = (map) => {
                 animation: google.maps.Animation.DROP
             })
             marker.setMap(map)
+            // console.log(doc.data().image)
             let infowindow = new google.maps.InfoWindow({
-              content: `${doc.data().name} and ${doc.data().email}`
+              content: `${doc.data().name} and ${doc.data().email} and <img src="${doc.data().image}" />`
             })
             marker.addListener('click', () => {
               infowindow.open(map, marker)
@@ -106,30 +157,27 @@ const showFOTC = (map) => {
 document.getElementById("searchAddress").addEventListener("submit", (event) => {
   event.preventDefault()
   let address = document.getElementById("address").value
-  // Make a geocode request
-  let geocoderSearch = new google.maps.Geocoder()
-  geocoderSearch.geocode({
-    'address': address
-  },(results, status) => {
-    if (status == 'OK') {
-      let pos = results[0].geometry.location
-      let map = new google.maps.Map(document.getElementById("map"), {center: pos, zoom: 12})
-      let marker = new google.maps.Marker({
-        position: pos, 
-        map: map,
-        title: 'Hello World!',
-        animation: google.maps.Animation.DROP
-      })
-      let infowindow = new google.maps.InfoWindow({
-        content: 'content String'
-      })
-      marker.setMap(map)
-      marker.addListener('click', () => {
-        infowindow.open(map, marker)
-      })
-    } else {
-      alert('Geocode was not successful for the following reason: ' + status);
-    }
+  setLocation({location: address})
+  .then((result) => {
+    console.log(result)
+    let pos = result.data.res[0].geometry.location
+    let map = new google.maps.Map(document.getElementById("map"), {center: pos, zoom: 10, styles: mapStyles})
+    let marker = new google.maps.Marker({
+      position: pos, 
+      map: map,
+      title: 'Hello World!',
+      animation: google.maps.Animation.DROP
+    })
+    let infowindow = new google.maps.InfoWindow({
+      content: 'content String'
+    })
+    marker.setMap(map)
+    marker.addListener('click', () => {
+      infowindow.open(map, marker)
+    })
+  })
+  .catch((error) => {
+    console.log("Error getting documents: ", error)
   })
 })
 
@@ -210,18 +258,238 @@ document.getElementById("saveListing").addEventListener("submit", (event) => {
   addListing(c,d,t,u,v)
 })
 
-document.getElementById("geoButton").addEventListener("click", (event) => {
-  event.preventDefault()
-  // Try HTML5 geolocation.
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      let pos = [position.coords.latitude,position.coords.longitude]
-      document.getElementById("userLocation").value = pos
-      console.log(pos)
-      })
-    }
-})
-
 $(function () {
   $('#datetimepicker1').datetimepicker()
 })
+
+let mapStyles = [{
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#1d2c4d"
+    }
+  ]
+},
+{
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#8ec3b9"
+    }
+  ]
+},
+{
+  "elementType": "labels.text.stroke",
+  "stylers": [
+    {
+      "color": "#1a3646"
+    }
+  ]
+},
+{
+  "featureType": "administrative.country",
+  "elementType": "geometry.stroke",
+  "stylers": [
+    {
+      "color": "#4b6878"
+    }
+  ]
+},
+{
+  "featureType": "administrative.land_parcel",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#64779e"
+    }
+  ]
+},
+{
+  "featureType": "administrative.province",
+  "elementType": "geometry.stroke",
+  "stylers": [
+    {
+      "color": "#4b6878"
+    }
+  ]
+},
+{
+  "featureType": "landscape.man_made",
+  "elementType": "geometry.stroke",
+  "stylers": [
+    {
+      "color": "#334e87"
+    }
+  ]
+},
+{
+  "featureType": "landscape.natural",
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#023e58"
+    }
+  ]
+},
+{
+  "featureType": "poi",
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#283d6a"
+    }
+  ]
+},
+{
+  "featureType": "poi",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#6f9ba5"
+    }
+  ]
+},
+{
+  "featureType": "poi",
+  "elementType": "labels.text.stroke",
+  "stylers": [
+    {
+      "color": "#1d2c4d"
+    }
+  ]
+},
+{
+  "featureType": "poi.park",
+  "elementType": "geometry.fill",
+  "stylers": [
+    {
+      "color": "#023e58"
+    }
+  ]
+},
+{
+  "featureType": "poi.park",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#3C7680"
+    }
+  ]
+},
+{
+  "featureType": "road",
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#304a7d"
+    }
+  ]
+},
+{
+  "featureType": "road",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#98a5be"
+    }
+  ]
+},
+{
+  "featureType": "road",
+  "elementType": "labels.text.stroke",
+  "stylers": [
+    {
+      "color": "#1d2c4d"
+    }
+  ]
+},
+{
+  "featureType": "road.highway",
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#2c6675"
+    }
+  ]
+},
+{
+  "featureType": "road.highway",
+  "elementType": "geometry.stroke",
+  "stylers": [
+    {
+      "color": "#255763"
+    }
+  ]
+},
+{
+  "featureType": "road.highway",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#b0d5ce"
+    }
+  ]
+},
+{
+  "featureType": "road.highway",
+  "elementType": "labels.text.stroke",
+  "stylers": [
+    {
+      "color": "#023e58"
+    }
+  ]
+},
+{
+  "featureType": "transit",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#98a5be"
+    }
+  ]
+},
+{
+  "featureType": "transit",
+  "elementType": "labels.text.stroke",
+  "stylers": [
+    {
+      "color": "#1d2c4d"
+    }
+  ]
+},
+{
+  "featureType": "transit.line",
+  "elementType": "geometry.fill",
+  "stylers": [
+    {
+      "color": "#283d6a"
+    }
+  ]
+},
+{
+  "featureType": "transit.station",
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#3a4762"
+    }
+  ]
+},
+{
+  "featureType": "water",
+  "elementType": "geometry",
+  "stylers": [
+    {
+      "color": "#0e1626"
+    }
+  ]
+},
+{
+  "featureType": "water",
+  "elementType": "labels.text.fill",
+  "stylers": [
+    {
+      "color": "#4e6d70"
+    }
+  ]
+}]

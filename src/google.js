@@ -3,36 +3,25 @@ import * as firebase from "firebase/app"
 import "firebase/auth"
 import 'firebase/firebase-functions'
 
-
 const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  databaseURL: process.env.databaseURL,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.measurementId
+    apiKey: "AIzaSyD6erUXL8-949PK9-M8nhgJrKZJwMEwE1A",
+    authDomain: "fotc-8d770.firebaseapp.com",
+    databaseURL: "https://fotc-8d770.firebaseio.com",
+    projectId: "fotc-8d770",
+    storageBucket: "fotc-8d770.appspot.com",
+    messagingSenderId: "1001262891474",
+    appId: "1:1001262891474:web:e911dd9ebdef622c5b480b",
+    measurementId: "G-9HJGZER0ZT"
 }
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig)
 export {firebase}
-
-const functions = firebase.functions()
-let googleKey
-let addMessage = functions.httpsCallable('app')
-
-addMessage({text: 'messageText'})
-.then((result) => {
-  // Read result of the Cloud Function.
-  console.log(result)
-  googleKey = result.data[1].googleKey['key']
-  return googleKey
-})
+export const functions = firebase.functions()
 
 export const googleSignIn = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithPopup(provider)
+
     .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const token = result.credential.accessToken
@@ -49,6 +38,7 @@ export const googleSignIn = () => {
         console.log(user.uid)
         console.log(user.emailVerified)
         console.log(user.providerData[0].providerId)
+        console.log('signInToken')
         console.log(token)
 
     })
@@ -81,3 +71,5 @@ export const googleSignOut = () => {
         console.log(errorMessage)
     })
 }
+
+export const setLocation = firebase.functions().httpsCallable('setLocation')

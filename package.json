@@ -23,6 +23,7 @@
     "bootstrap": "^4.4.1",
     "bootswatch": "^4.4.1",
     "dotenv-webpack": "^1.7.0",
+    "extract-loader": "^4.0.3",
     "faker": "^4.1.0",
     "file-loader": "^5.0.2",
     "firebase": "^7.7.0",
@@ -55,6 +56,6 @@
     "tls": "0.0.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.10.2"
   }
 }

@@ -19,12 +19,11 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [
+    "rewrites": [ 
       {
         "source": "**",
-        "function": "app",
         "destination": "/index.html"
-      }
+      } 
     ],
     "headers": [
       {

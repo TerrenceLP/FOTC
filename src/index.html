@@ -9,7 +9,7 @@
     <link rel="canonical" href="https://fotc.app/">
   </head>
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <div class="container">
 
           <a id="navbar-brand" class="navbar-brand" title="Edit Your Profile" href="#manage-profile-row">
@@ -46,13 +46,16 @@
     <div class="jumbotron">
 
       <div class="row">
-        <div class="col">
-          <h2 class="display-4">Search Address</h2>
+        <div class="col-sm">
+          <h3>The Circuit</h3>
         </div>
-        <div class="col mt-3">
+        <div class="col-2-sm mt-2">
           <form id="searchAddress" name="searchAddress" class="form-inline">
-                <input type="text" class="form-control mb-2 mr-sm-2" placeholder="409 Blackwell St, Durham, NC 27701" id="address" name="address" size="40">
-                <button id="submitSearchAddress" type="submit" class="btn btn-primary mb-2">Search</button>
+                <input type="text" class="form-control mr-sm-2" placeholder="409 Blackwell St, Durham, NC 27701" id="address" name="address" size="40">
+                <div class="btn-group" role="group">
+                  <button id="submitSearchAddress" type="submit" class="btn btn-primary">Search</button> 
+                  <a href="#" id="geoButton" name="geoButton" class="btn btn-secondary" type="button">Locate Me</a>
+              </div>
           </form>
         </div>
       </div>
