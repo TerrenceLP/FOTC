@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/TerrenceLP/FOTC#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "bootswatch": "^4.4.1",
     "dotenv-webpack": "^1.7.0",
